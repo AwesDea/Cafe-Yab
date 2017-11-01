@@ -1,0 +1,28 @@
+body .background {
+	position: relative;
+	width: 100%;
+	height: 765px;
+	background-color: #2c3032;
+	margin: 0;
+	padding: 0; 
+}
+
+body .background .image {
+	position: absolute;
+	width: 1200px;
+	height: 600px;
+	background-image: url("CafeYab.jpg");
+	top: 80px;
+	left: 70px;
+
+}
+
+body .background .enter {
+	position: absolute;
+	width: 230px;
+	height: 80px;
+	background-color: red;
+	/*background-image: url("enter.jpg");*/
+	top: 300px;
+	left: 200px;
+}
