@@ -13,4 +13,6 @@ from django.shortcuts import render
 
 
 def homeview(request):
-    return render(request, 'index.html')
+    return render(request, 'home.html')
+def welcomeView(request):
+    return render(request, 'welcome.html')
