@@ -1,9 +1,10 @@
 from django.conf.urls import url
 
-from account.views import welcomeView, LoginView
+from account.views import welcomeView, LoginView, signupView
 
 urlpatterns = [
-    url(r'^welcome/$', welcomeView, name='welcome'),
-    url(r'^$', LoginView.as_view(), name='login'),
+    url(r'^$', welcomeView, name='welcome'),
+    url(r'home/^$', LoginView.as_view(), name='home'),
+    url(r'signup/^$', signupView, name='signup'),
 
 ]

@@ -23,3 +23,6 @@ class LoginView(FormView):
 
 def welcomeView(request):
     return render(request, 'welcome.html')
+
+def signupView(request):
+    return render(request, 'signup.html')
