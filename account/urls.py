@@ -6,5 +6,6 @@ urlpatterns = [
     url(r'^$', welcomeView, name='welcome'),
     url(r'^home/$', LoginView.as_view(), name='home'),
     url(r'^signup/$', signup, name='signup'),
+    url(r'^cafelist/$', cafeList, name='cafelist'),
 
 ]

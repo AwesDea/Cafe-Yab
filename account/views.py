@@ -22,9 +22,9 @@ class LoginView(FormView):
         return super(LoginView, self).form_valid(form)
 
 
-
 def welcomeView(request):
     return render(request, 'welcome.html')
+
 
 def signup(request):
     if request.method == 'POST':
@@ -35,7 +35,9 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('home')
+            return redirect('account:home')
+        else:
+            return render(request, 'signup.html', {'form': form})
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
