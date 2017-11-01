@@ -17,6 +17,8 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
+from account import views as acc_views
+
 
 
 
@@ -25,6 +27,7 @@ urlpatterns = [
     url(r'^', include('account.urls', namespace='account')),
     url(r'^', include('cafe.urls', namespace='cafe')),
     url(r'^captcha/', include('captcha.urls')),
+
 
               ] + static(settings.STATIC_URL) \
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
