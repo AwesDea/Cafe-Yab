@@ -10,7 +10,8 @@
     {% block content %}
         <div class="signup">
             <h2 id="signup" id="emailHelp" class="form-text text-muted">Sign Up</h2>
-            <form>
+            <form method="post">
+                {% csrf_token %}
               <div class="form-group">
                 <input name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your name">
               </div>
