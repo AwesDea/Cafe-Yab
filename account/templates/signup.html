@@ -43,6 +43,11 @@
                 <small style="color: red;">{{ form.password2.errors }}</small>
 
             </div>
+            {{ form.captcha }}
+            <small style="color: red;">{{ form.captcha.errors }}</small>
+
+
+            <br>
 
             <button type="submit" class="btn btn-primary">Submit</button>
             {% if form.non_field_errors %}

@@ -22,6 +22,9 @@ from django.conf import settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', include('account.urls', namespace='account'))
-] + static(settings.STATIC_URL) \
+    url(r'^', include('account.urls', namespace='account')),
+    url(r'^', include('cafe.urls', namespace='cafe')),
+    url(r'^captcha/', include('captcha.urls')),
+
+              ] + static(settings.STATIC_URL) \
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
