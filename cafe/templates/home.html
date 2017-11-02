@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+{% extends "base.html" %}
+
+<html>
+{% block head_content %}
+    <title>Home</title>
+    <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="cafelist">
+        <h2>Cafe List</h2>
+        {% for cafe in object_list %}
+            <div class="cafe">
+                <div class="pic"><img src="{{ cafe.main_image_url }}" width="40%" height="40%"></div>
+                <div class="content">
+                    <p style="font-size: 25px"><a href="\cafe\{{ cafe.id }}">{{ cafe.name }}</a></p>
+                    <p>{{ cafe.description }}</p>
+                    <br>
+                    <hr>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+
+    <div id="map"></div>
+
+    <script type="text/javascript">
+        var cafes = [
+            {% for cafe in cafe_list %}
+                [' {{ cafe.name }} ', {{  cafe.latitude}}, {{  cafe.longitude }},'{{ cafe.description|linebreaks }}'],
+            {% endfor %}
+        ];
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 10,
+            center: new google.maps.LatLng(40.44407301696414, -80.02870559692383),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+        var infowindow = new google.maps.InfoWindow();
+        var marker, i;
+        for (i = 0; i < cafes.length; i++) {
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(cafes[i][1], cafes[i][2]),
+                map: map
+            });
+            google.maps.event.addListener(marker, 'mouseover', (function (marker, i) {
+                return function () {
+                    infowindow.setContent(cafes[i][0] + '\n '+ cafes[i][3]);
+                    infowindow.open(map, marker);
+                }
+            })(marker, i));
+            google.maps.event.addListener(marker, 'mouseout', (function (marker, i) {
+                return function () {
+                    infowindow.close()
+                }
+            })(marker, i));
+        }
+    </script>
+
+
+{% endblock %}
+
+
+</html>
