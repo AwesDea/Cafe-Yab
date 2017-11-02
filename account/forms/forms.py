@@ -16,3 +16,5 @@ class SignUpForm(UserCreationForm):
 
 class SearchForm(forms.Form):
     keyword = forms.CharField(max_length=30)
+
+# class cafeRegistrationForm(forms.Form):
