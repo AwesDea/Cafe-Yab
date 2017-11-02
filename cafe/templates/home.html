@@ -45,9 +45,12 @@
   <script type="text/javascript">
       var cafes = [
           {% for cafe in cafe_list %}
-            [' {{ cafe.name }} ',{{  cafe.latitude}} , {{  cafe.longitude}},],
+            [' {{ cafe.name }} ',{{  cafe.latitude}} , {{  cafe.longitude }} ,],
           {% endfor %}
     ];
+      for cafe in cafes{
+          someText = someText.replace(/(\r\n|\n|\r)/gm,"");
+      }
 
 
     var map = new google.maps.Map(document.getElementById('map'), {
@@ -66,12 +69,18 @@
         map: map
       });
 
-      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+      google.maps.event.addListener(marker, 'mouseover', (function(marker, i) {
         return function() {
           infowindow.setContent(cafes[i][0]);
           infowindow.open(map, marker);
         }
       })(marker, i));
+            google.maps.event.addListener(marker, 'mouseout', (function(marker, i) {
+        return function() {
+          infowindow.close()
+        }
+      })(marker, i));
+
     }
   </script>
 {% endblock %}

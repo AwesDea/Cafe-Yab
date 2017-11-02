@@ -6,7 +6,11 @@ from django.utils import timezone
 
 from cafe.models import Cafe
 
+
 class CafeleListView(ListView):
     template_name = 'home.html'
     model = Cafe
 
+
+def cafeView(request):
+    return render(request, 'cafe.html')
