@@ -10,12 +10,13 @@
 {% block content %}
     <div class="register">
         <form method="post">
+            {% csrf_token %}
             <h2>Cafe Register</h2>
             <div class="form-group">
                 <input name="name" type="text" class="form-control" id="exampleFormControlInput1"
                        placeholder="Cafe Name">
             </div>
-
+            {{ form.errors }}
             <div class="form-group">
                 <label for="exampleFormControlTextarea1">Description</label>
                 <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
@@ -30,10 +31,10 @@
                 </div>
             </div>
 
-            <label style="margin-top: 15px" class="custom-file">
-                <input type="file" id="file" class="custom-file-input" required>
-                <span class="custom-file-control"></span>
-            </label>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">image</label>
+                <textarea name="main_image_url" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
 
             <button style="margin-top: 10px" type="submit" class="btn btn-primary">Submit</button>
             {% if form.non_field_errors %}

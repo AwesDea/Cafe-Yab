@@ -1,17 +1,14 @@
 # Create your views here.
-from django.contrib.auth.forms import AuthenticationForm
-from django.views.generic import FormView, RedirectView
-from account.forms.forms import SignUpForm
-from django.contrib.sites.shortcuts import get_current_site
-from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode
-from django.template.loader import render_to_string
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
+from django.views.generic import FormView, RedirectView
+
 from account.tokens import account_activation_token
+from forms.forms import SignUpForm
 
 
 class LoginView(FormView):

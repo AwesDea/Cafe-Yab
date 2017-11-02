@@ -20,10 +20,10 @@ class SearchForm(forms.Form):
 
 class CafeRegistrationForm(forms.Form):
     name = forms.CharField(max_length=30, required=True, help_text='Required.')
-    description = forms.CharField(max_length=30,  help_text='Optional.')
-    longitude = forms.CharField(max_length=30, required=True, help_text='Required.')
-    latitude = forms.CharField(max_length=30, required=True, help_text='Required.')
-    main_image_url = forms.CharField(max_length=30, required=True, help_text='Required.')
+    description = forms.CharField(max_length=555550,required=False,  help_text='Optional.')
+    longitude = forms.FloatField(required=True, help_text='Required.')
+    latitude = forms.FloatField(required=True, help_text='Required.')
+    main_image_url = forms.CharField(max_length=20000, required=True, help_text='Required.')
 
     class Meta:
         model = Cafe

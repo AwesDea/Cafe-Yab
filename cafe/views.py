@@ -1,13 +1,11 @@
 import json
+
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-
-# Create your views here.
 from django.views.generic.list import ListView
-from django.utils import timezone
 
-from account.forms.forms import SearchForm, CafeRegistrationForm
 from cafe.models import Cafe
+from forms.forms import SearchForm, CafeRegistrationForm
 
 
 class CafeleListView(ListView):
@@ -56,18 +54,13 @@ def cafeRegister(request):
     if request.method == 'POST':
         form = CafeRegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
             name = form.cleaned_data.get('name')
             description = form.cleaned_data.get('description')
             latitude = form.cleaned_data.get('latitude')
             longitude = form.cleaned_data.get('longitude')
             main_image_url = form.cleaned_data.get('main_image_url')
-            new_cafe = Cafe.objects.create()
-            new_cafe.name = name
-            new_cafe.description = description
-            new_cafe.latitude = latitude
-            new_cafe.longitude = longitude
-            new_cafe.main_image_url = main_image_url
+
+            new_cafe = Cafe(name=name, description=description, latitude=latitude, longitude=longitude, main_image_url=main_image_url)
             new_cafe.save()
             return redirect('cafe:home')
         else:
