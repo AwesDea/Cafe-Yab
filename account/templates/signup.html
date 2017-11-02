@@ -9,44 +9,43 @@
 
 {% block content %}
     <div class="signup">
-        <h2 id="signup" id="emailHelp" class="form-text text-muted">Sign Up</h2>
+        <h2>Sign Up</h2>
         <form method="post">
             {% csrf_token %}
-
             <div class="form-group">
                 <input name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                       placeholder="Enter your name">
+                       placeholder="Full Name">
                 <small style="color: red;">{{ form.name.errors }}</small>
 
             </div>
             <div class="form-group">
                 <input name="username" type="text" class="form-control" id="exampleInputEmail1"
-                       aria-describedby="emailHelp" placeholder="Enter user name">
+                       aria-describedby="emailHelp" placeholder="User Name">
                 <small style="color: red;">{{ form.username.errors }}</small>
             </div>
             <div class="form-group">
                 <input name="email" type="email" class="form-control" id="exampleInputEmail1"
-                       aria-describedby="emailHelp" placeholder="Enter email">
+                       aria-describedby="emailHelp" placeholder="Email">
                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.
                 </small>
                 <small style="color: red;">{{ form.email.errors }}</small>
             </div>
             <div class="form-group">
                 <input name="password1" type="password" class="form-control" id="exampleInputPassword1"
-                       placeholder="Enter password">
+                       placeholder="Password">
                 <small style="color: red;">{{ form.password1.errors }}</small>
 
             </div>
             <div class="form-group">
                 <input name="password2" type="password" class="form-control" id="exampleInputPassword1"
-                       placeholder="Re-enter password">
+                       placeholder="Password">
                 <small style="color: red;">{{ form.password2.errors }}</small>
 
             </div>
             {{ form.captcha }}
             <small style="color: red;">{{ form.captcha.errors }}</small>
 
-
+            <div id="br"></div>
             <br>
 
             <button type="submit" class="btn btn-primary">Submit</button>
