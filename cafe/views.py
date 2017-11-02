@@ -20,7 +20,7 @@ def searchInCafes(request):
             keyword = form.cleaned_data.get('keyword')
             results = Cafe.objects.filter(name__contains=keyword)
 
-            return render(request, 'home.html', {'form': form, 'results': results})
+            return render(request, 'home.html', {'form': form, 'object_list': results})
     else:
         form = searchInCafes()
     return render(request, 'home.html', {'form': form})

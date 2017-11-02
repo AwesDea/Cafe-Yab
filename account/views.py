@@ -96,3 +96,18 @@ def activate(request, uidb64, token):
         return redirect('account:welcome')
     else:
         return render(request, 'account_activation_invalid.html')
+
+
+class LoginView(FormView):
+    success_url = '/home/'
+    form_class = AuthenticationForm
+    template_name = 'login.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        request.session.set_test_cookie()
+        return super(LoginView, self).dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        login(self.request, form.get_user())
+
+        return super(LoginView, self).form_valid(form)
