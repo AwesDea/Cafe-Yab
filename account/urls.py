@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
 from account.views import welcomeView, LoginView, signup, activate, account_activation_sent, account_activation_invalid, \
-    LogoutView
+    LogoutView, profileView
 
 urlpatterns = [
     url(r'^$', welcomeView, name='welcome'),
@@ -12,5 +12,6 @@ urlpatterns = [
         activate, name='activate'),
     url(r'^account_activation_sent/$', account_activation_sent, name='account_activation_sent'),
     url(r'^account_activation_invalid/$', account_activation_invalid, name='account_activation_invalid'),
+    url(r'^profile/(?P<user_id>\d+)/$', profileView, name='profileView'),
 
 ]

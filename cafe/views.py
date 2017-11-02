@@ -61,12 +61,13 @@ def cafeRegister(request):
             description = form.cleaned_data.get('description')
             latitude = form.cleaned_data.get('latitude')
             longitude = form.cleaned_data.get('longitude')
-            longitude = form.cleaned_data.get('longitude')
+            main_image_url = form.cleaned_data.get('main_image_url')
             new_cafe = Cafe.objects.create()
             new_cafe.name = name
             new_cafe.description = description
             new_cafe.latitude = latitude
             new_cafe.longitude = longitude
+            new_cafe.main_image_url = main_image_url
             new_cafe.save()
             return redirect('cafe:home')
         else:

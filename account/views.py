@@ -8,7 +8,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.template.loader import render_to_string
 from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from account.tokens import account_activation_token
@@ -117,3 +117,9 @@ class LogoutView(RedirectView):
     def get(self, request, *args, **kwargs):
         logout(request)
         return super(LogoutView, self).get(request, *args, **kwargs)
+
+
+def profileView(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    return render(request, 'profile.html', {'user': user,
+                                         })
