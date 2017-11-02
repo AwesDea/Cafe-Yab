@@ -1,10 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
 
-</body>
+{% extends "base.html" %}
+
+<html xmlns="http://www.w3.org/1999/html">
+{% block head_content %}
+    <title>Register Cafe</title>
+{% endblock %}
+
+{% block content %}
+    <div class="register">
+        <form method="post">
+            <h2>Cafe Register</h2>
+            <div class="form-group">
+                <input name="name" type="text" class="form-control" id="exampleFormControlInput1"
+                       placeholder="Cafe Name">
+            </div>
+
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Description</label>
+                <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <input name="longitude" type="number" class="form-control" placeholder="Longitude">
+                </div>
+                <div class="col">
+                    <input name="latitude" type="number" class="form-control" placeholder="Latitude">
+                </div>
+            </div>
+
+            <label style="margin-top: 15px" class="custom-file">
+                <input type="file" id="file" class="custom-file-input" required>
+                <span class="custom-file-control"></span>
+            </label>
+
+            <button style="margin-top: 10px" type="submit" class="btn btn-primary">Submit</button>
+            {% if form.non_field_errors %}
+                <div class="non-field-errors">
+                    {% for err in form.non_field_errors %}
+                        <p class="form-error">{{ err }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </form>
+    </div>
+{% endblock %}
+
 </html>
