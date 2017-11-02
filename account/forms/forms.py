@@ -13,3 +13,6 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'name', 'email', 'password1', 'password2', 'captcha' )
+
+class SearchForm(forms.Form):
+    keyword = forms.CharField(max_length=30)
