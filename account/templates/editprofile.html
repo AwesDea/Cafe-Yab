@@ -19,12 +19,12 @@
 
             </div>
             <div class="form-group">
-                <input name="username" type="text" class="form-control" id="exampleInputEmail1"
+                <input name="username" type="text" value="{{ user.username }}"class="form-control" id="exampleInputEmail1"
                        aria-describedby="emailHelp" placeholder="User Name">
                 <small style="color: red;">{{ form.username.errors }}</small>
             </div>
             <div class="form-group">
-                <input name="email" type="email" class="form-control" id="exampleInputEmail1"
+                <input name="email" type="email" value="{{ user.email }}"class="form-control" id="exampleInputEmail1"
                        aria-describedby="emailHelp" placeholder="Email">
                 <small style="color: red;">{{ form.email.errors }}</small>
             </div>
