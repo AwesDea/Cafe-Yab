@@ -13,10 +13,9 @@
         <h2>Cafe List</h2>
         {% for cafe in object_list %}
             <div class="cafe">
-                <div class="pic">
-                    <img src="{{ cafe.main_image_url }}" width="40%" height="40%"></div>
+                <div class="pic"><img src="{{ cafe.main_image_url }}" width="40%" height="40%"></div>
                 <div class="content">
-                    <p>{{ cafe.name }}</p>
+                    <p style="font-size: 25px"><a href="\cafe\{{ cafe.id }}">{{ cafe.name }}</a></p>
                     <p>{{ cafe.description }}</p>
                     <br>
                     <hr>
@@ -31,7 +30,7 @@
     <script type="text/javascript">
         var cafes = [
             {% for cafe in cafe_list %}
-                [' {{ cafe.name }} ', {{  cafe.latitude}}, {{  cafe.longitude }},'{{ cafe.description|linebreaks}}' ],
+                [' {{ cafe.name }} ', {{  cafe.latitude}}, {{  cafe.longitude }},'{{ cafe.description|linebreaks }}'],
             {% endfor %}
         ];
 

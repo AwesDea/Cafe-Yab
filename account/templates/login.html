@@ -1,49 +1,46 @@
 <!DOCTYPE html>
-{% load static %}
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>webelopers</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
-          integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <link href="{% static "style.css" %}" type="text/css" rel="stylesheet">
+{% extends "base.html" %}
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
-            integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
-            integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
-            crossorigin="anonymous"></script>
-</head>
-<body>
+<html>
+{% block head_content %}
+    <title>Login</title>
+{% endblock %}
 
-<form method="post" id="login" class="panels">
-    {% csrf_token %}
-    <div class="form-group">
-        <label for="exampleInputEmail1">Username</label>
-        {{ form.username }}
-        <small style="color: red;">{{ form.username.errors }}</small>
+{% block content %}
+    <div class="signup">
+        <h2>Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <input name="username" type="text" class="form-control" id="exampleInputEmail1"
+                       aria-describedby="emailHelp" placeholder="User Name">
+                <small style="color: red;">{{ form.username.errors }}</small>
+            </div>
+            <div class="form-group">
+                <input name="password1" type="password" class="form-control" id="exampleInputPassword1"
+                       placeholder="Password">
+                <small style="color: red;">{{ form.password1.errors }}</small>
+            </div>
+            {{ form.captcha }}
+            <small style="color: red;">{{ form.captcha.errors }}</small>
+
+            <div id="br"></div>
+            <br>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+            {% if form.non_field_errors %}
+                <div class="non-field-errors">
+                    {% for err in form.non_field_errors %}
+                        <p class="form-error">{{ err }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+        </form>
+
+
     </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        {{ form.password }}
-        <small style="color: red;">{{ form.password.errors }}</small>
+{% endblock %}
 
-    </div>
-    {% if form.non_field_errors %}
-        <div class="non-field-errors">
-            {% for err in form.non_field_errors %}
-                <p class="form-error">{{ err }}</p>
-            {% endfor %}
-        </div>
-    {% endif %}
-
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-
-</body>
 </html>
