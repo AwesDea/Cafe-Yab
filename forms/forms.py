@@ -28,3 +28,11 @@ class CafeRegistrationForm(forms.Form):
     class Meta:
         model = Cafe
         fields = ('name', 'description', 'longitude', 'latitude', 'main_image_url' )
+
+class EditProfileForm(UserCreationForm):
+    first_name = forms.CharField(max_length=30, required=True, help_text='Optional.')
+    email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
+
+    class Meta:
+        model = User
+        fields = ( 'first_name', 'email', 'password1', 'password2')

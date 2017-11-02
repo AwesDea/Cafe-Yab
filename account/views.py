@@ -8,7 +8,7 @@ from django.utils.http import urlsafe_base64_decode
 from django.views.generic import FormView, RedirectView
 
 from account.tokens import account_activation_token
-from forms.forms import SignUpForm
+from forms.forms import SignUpForm, EditProfileForm
 
 
 class LoginView(FormView):
@@ -123,3 +123,31 @@ def profileView(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     return render(request, 'profile.html', {'user': user,
                                             })
+
+# def editProfile(request):
+#     return render(request, 'editprofile.html')
+
+
+def editProfile(request):
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST)
+        if form.is_valid():
+            form.save()
+            firstname = form.cleaned_data.get('firstname')
+            email = form.cleaned_data.get('email')
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            raw_password2 = form.cleaned_data.get('password2')
+
+            current_user = User.objects.get(username=username)
+            current_user.first_name = firstname
+            current_user.email = email
+            if raw_password == raw_password2:
+                current_user.password = raw_password
+            current_user.save()
+            return redirect('account:welcome')
+        else:
+            return render(request, 'editprofile.html', {'form': form})
+    else:
+        form = EditProfileForm()
+    return render(request, 'editprofile.html', {'form': form})
