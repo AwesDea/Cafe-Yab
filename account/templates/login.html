@@ -31,9 +31,17 @@
     <div class="form-group">
         <label for="exampleInputPassword1">Password</label>
         {{ form.password }}
-{#        <small style="color: red;">{{ form.password.errors }}</small>#}
+        <small style="color: red;">{{ form.password.errors }}</small>
 
     </div>
+    {% if form.non_field_errors %}
+        <div class="non-field-errors">
+            {% for err in form.non_field_errors %}
+                <p class="form-error">{{ err }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
