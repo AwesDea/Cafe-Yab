@@ -8,6 +8,7 @@ class Cafe(models.Model):
     longitude = models.FloatField()
     latitude = models.FloatField()
     main_image_url = models.URLField()
+    verified = models.BooleanField(null=True,blank=True)
 
     def __str__(self):
         return self.name

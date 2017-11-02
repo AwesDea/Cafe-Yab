@@ -13,9 +13,9 @@
         <form method="post">
             {% csrf_token %}
             <div class="form-group">
-                <input name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                <input name="first_name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                        placeholder="Full Name">
-                <small style="color: red;">{{ form.name.errors }}</small>
+                <small style="color: red;">{{ form.first_name.errors }}</small>
 
             </div>
             <div class="form-group">
