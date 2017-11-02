@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.list import ListView
 from django.utils import timezone
 
-from account.forms.forms import SearchForm
+from account.forms.forms import SearchForm, CafeRegistrationForm
 from cafe.models import Cafe
 
 
@@ -31,7 +31,7 @@ def searchInCafes(request):
 def cafeView(request, cafe_id):
     cafe = get_object_or_404(Cafe, pk=cafe_id)
     return render(request, 'cafe.html', {'cafe': cafe,
-                                                  })
+                                         })
 
 
 def autocomplete(request):
@@ -51,3 +51,26 @@ def autocomplete(request):
     mimetype = 'application/json'
     return HttpResponse(data, mimetype)
 
+
+def cafeRegister(request):
+    if request.method == 'POST':
+        form = CafeRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            name = form.cleaned_data.get('name')
+            description = form.cleaned_data.get('description')
+            latitude = form.cleaned_data.get('latitude')
+            longitude = form.cleaned_data.get('longitude')
+            longitude = form.cleaned_data.get('longitude')
+            new_cafe = Cafe.objects.create()
+            new_cafe.name = name
+            new_cafe.description = description
+            new_cafe.latitude = latitude
+            new_cafe.longitude = longitude
+            new_cafe.save()
+            return redirect('cafe:home')
+        else:
+            return render(request, 'caferegister.html', {'form': form})
+    else:
+        form = CafeRegistrationForm()
+    return render(request, 'caferegister.html', {'form': form})

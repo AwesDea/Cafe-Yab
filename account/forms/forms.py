@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from captcha.fields import CaptchaField
 
+from cafe.models import Cafe
 
 
 class SignUpForm(UserCreationForm):
@@ -17,4 +18,8 @@ class SignUpForm(UserCreationForm):
 class SearchForm(forms.Form):
     keyword = forms.CharField(max_length=30)
 
-# class cafeRegistrationForm(forms.Form):
+class CafeRegistrationForm(forms.Form):
+
+    class Meta:
+        model = Cafe
+        fields = ('name', 'description', 'longitude', 'latitude', 'main_image_url' )
