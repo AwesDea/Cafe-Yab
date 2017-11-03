@@ -1,13 +1,18 @@
 # Create your views here.
+import uuid
+
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
+from django.contrib.sites.shortcuts import get_current_site
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.utils.encoding import force_text
-from django.utils.http import urlsafe_base64_decode
+from django.template.loader import render_to_string
+from django.utils.encoding import force_text, force_bytes
+from django.utils.html import strip_tags
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views.generic import FormView, RedirectView
-
-from account.tokens import account_activation_token
+from django.core.mail import EmailMessage, EmailMultiAlternatives
 from forms.forms import SignUpForm, EditProfileForm
 
 
@@ -43,18 +48,32 @@ def signup(request):
         if form.is_valid():
             print("HEY")
             form.save()
-            firstname = form.cleaned_data.get('firstname')
+            firstname = form.cleaned_data.get('first_name')
             email = form.cleaned_data.get('email')
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
+            sendMail(user, request.build_absolute_uri('/activation/' + str(uuid.uuid4)))
+
             return redirect('account:welcome')
         else:
             return render(request, 'signup.html', {'form': form})
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
+
+
+def sendMail(new_user, activation_link):
+    subject = "Activation Key"
+    from_email = 'webelopertest@gmail.com'
+    to = new_user.email
+    context = {'new_user': new_user, 'url': activation_link}
+    html_message = render_to_string('account_activation_email.html', context)
+    text_content = strip_tags(html_message)
+    msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+    msg.attach_alternative(html_message, "text/html")
+    msg.send()
 
 
 # def signup(request):
@@ -65,35 +84,24 @@ def signup(request):
 #             user.is_active = False
 #             user.save()
 #             current_site = get_current_site(request)
-#             subject = 'Activate Your MySite Account'
 #             message = render_to_string('account_activation_email.html', {
 #                 'user': user,
 #                 'domain': current_site.domain,
 #                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
 #                 'token': account_activation_token.make_token(user),
 #             })
-#             user.email_user(subject, message)
-#             return redirect('account:account_activation_sent')
+#             mail_subject = 'Activate your blog account.'
+#             to_email = form.cleaned_data.get('email')
+#             email = EmailMessage(mail_subject, message, to=[to_email])
+#             email.send()
+#             return HttpResponse('Please confirm your email address to complete the registration')
+#
 #     else:
 #         form = SignUpForm()
+#
 #     return render(request, 'signup.html', {'form': form})
 
 
-def activate(request, uidb64, token):
-    try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
-    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
-
-    if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
-        user.profile.email_confirmed = True
-        user.save()
-        login(request, user)
-        return redirect('account:welcome')
-    else:
-        return render(request, 'account_activation_invalid.html')
 
 
 class LoginView(FormView):
@@ -124,6 +132,7 @@ def profileView(request, user_id):
     return render(request, 'profile.html', {'user': user,
                                             })
 
+
 # def editProfile(request):
 #     return render(request, 'editprofile.html')
 
@@ -132,20 +141,21 @@ def editProfile(request):
     if request.method == 'POST':
         form = EditProfileForm(request.POST)
         if form.is_valid():
-            form.save()
-            firstname = form.cleaned_data.get('firstname')
+            first_name = form.cleaned_data.get('first_name')
             email = form.cleaned_data.get('email')
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             raw_password2 = form.cleaned_data.get('password2')
-
+            print(raw_password)
+            print(raw_password2)
             current_user = User.objects.get(username=username)
-            current_user.first_name = firstname
+            current_user.first_name = first_name
             current_user.email = email
-            if raw_password == raw_password2:
-                current_user.password = raw_password
+            if raw_password == raw_password2 and raw_password:
+                current_user.set_password(raw_password)
             current_user.save()
-            return redirect('account:welcome')
+            login(request, current_user)
+            return redirect('cafe:home')
         else:
             return render(request, 'editprofile.html', {'form': form})
     else:

@@ -19,14 +19,14 @@
         <form method="post">
             {% csrf_token %}
             <div class="form-group">
-                <input  name="name" type="text" value="{{ user.first_name }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                <input  name="first_name" type="text" value="{{ user.first_name }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                        placeholder="Full Name">
                 <small style="color: red;">{{ form.name.errors }}</small>
 
             </div>
             <div class="form-group">
-                <input type="text" value="{{ user.username }}"class="form-control" id="exampleInputEmail1"
-                       aria-describedby="emailHelp" placeholder="User Name" disabled>
+                <input type="text" name="username" value="{{ user.username }}"class="form-control" id="exampleInputEmail1"
+                       aria-describedby="emailHelp" placeholder="User Name" style="display: none;">
                 <small style="color: red;">{{ form.username.errors }}</small>
             </div>
             <div class="form-group">
@@ -35,19 +35,18 @@
                 <small style="color: red;">{{ form.email.errors }}</small>
             </div>
             <div class="form-group">
-                <input name="password1" type="password" value="{{ user.password1 }} class="form-control" id="exampleInputPassword1"
+                <input name="password1" type="password" class="form-control" id="exampleInputPassword1"
                        placeholder="Password">
                 <small style="color: red;">{{ form.password1.errors }}</small>
 
             </div>
             <div class="form-group">
-                <input name="password2" type="password" value="{{ user.password2 }} class="form-control" id="exampleInputPassword1"
+                <input name="password2" type="password" class="form-control" id="exampleInputPassword1"
                        placeholder="Password">
                 <small style="color: red;">{{ form.password2.errors }}</small>
 
             </div>
-            {{ form.captcha }}
-            <small style="color: red;">{{ form.captcha.errors }}</small>
+{#            {{ form.errors }}#}
 
             <div id="br"></div>
             <br>

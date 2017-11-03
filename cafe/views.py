@@ -11,6 +11,8 @@ from forms.forms import SearchForm, CafeRegistrationForm
 class CafeleListView(ListView):
     template_name = 'home.html'
     model = Cafe
+    def get_queryset(self):
+        return self.model.objects.filter(verified=True)
 
 
 def searchInCafes(request):
